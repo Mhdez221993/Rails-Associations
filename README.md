@@ -2,12 +2,9 @@
 
 # Rails Associations
 
-> Associations make it much easier to perform various operations on the records in your code. There are multiple types of associations available:
+> A one-to-many association is probably the most common and widely used type. The idea is pretty simple: record A may have many records B and record B belongs to only one record A. For each record B you have to store an id of the record A it belongs to – this id is called a foreign key.
 
-- One-to-one
 - One-to-many
-- Many-to-many
-- Polymorphic one-to-many
 
 ## Built With
 
@@ -40,6 +37,13 @@ Contributions, issues, and feature requests are welcome!
 
 Feel free to check the [issues page](https://github.com/Mhdez221993/Rails-Associations/issues).
 
+
+## Credits
+
+The list of third party components used in this project, with due credits to their authors and license terms. More details can be found in the next link.
+
+- Ilya Bodrov-Krukowski
+- [credits](https://www.sitepoint.com/brush-up-your-knowledge-of-rails-associations/)
 ## Show your support
 
 Give a ⭐️ if you like this project!

@@ -4,10 +4,10 @@
 
 > Associations make it much easier to perform various operations on the records in your code. There are multiple types of associations available:
 
--One-to-one
--One-to-many
--Many-to-many
--Polymorphic one-to-many
+- One-to-one
+- One-to-many
+- Many-to-many
+- Polymorphic one-to-many
 
 ## Built With
 

@@ -59,6 +59,13 @@ Contributions, issues, and feature requests are welcome!
 
 Feel free to check the [issues page](https://github.com/Mhdez221993/Rails-Associations/issues).
 
+## Credits
+
+The list of third party components used in this project, with due credits to their authors and license terms. More details can be found in the next link.
+
+- Ilya Bodrov-Krukowski
+- [credits](https://www.sitepoint.com/brush-up-your-knowledge-of-rails-associations/)
+
 ## Show your support
 
 Give a ⭐️ if you like this project!

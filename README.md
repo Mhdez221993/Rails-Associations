@@ -43,51 +43,59 @@
 
 - As long as we used the references keyword when generating migration, the Post model will already have the following line:
 
-- belongs_to :user
+- `belongs_to :user`
 
 - Still, the User has to be modified manually:
 
-- models/user.rb
+- `models/user.rb`
 
-- has_many :posts
+- `has_many :posts`
 
-- Note the plural form (“posts“) for the relation’s name. For the belongs_to relation, you use the singular form (“user”).
+- Note the plural form `(“posts“)` for the relation’s name. For the `belongs_to` relation, you use the singular form `(“user”)`.
 
 - Now the relation is established and you can use methods like:
 
-- user.posts – references user’s posts
-- user.posts << post – establishes a new relation between a user and a post
-- post.user – references an owner of the post
-- user.posts.build({ }) – instantiates a new post for the user, but doesn’t save it into the database yet. It does populate the user_id attribute on the post. This is similar to saying Post.new({user_id: user.id}).
-- user.posts.create({ }) – creates a new post and saves it into the database.
-- post.build_user – same as above, instantiates a new user without saving it.
-- post.create_user – same as above, instantiates and saves the user into the database.
+- `user.posts` – references user’s posts
+- `user.posts << post` – establishes a new relation between a user and a post
+- `post.user` – references an owner of the post
+- `user.posts.build({ })` – instantiates a new post for the user, but doesn’t save it into the database yet. It does populate the user_id attribute on the post. This is similar to saying Post.new({user_id: user.id}).
+- `user.posts.create({ })` – creates a new post and saves it into the database.
+- `post.build_user` – same as above, instantiates a new user without saving it.
+- `post.create_user` – same as above, instantiates and saves the user into the database.
 
-- Suppose, for example, that you want the belongs_to relation to be called author, not user:
+- Suppose, for example, that you want the  `belongs_to`   relation to be called `author`, not `user`:
 
-- models/post.rb
-- belongs_to :author, class_name: 'User'
+- `models/post.rb`
+- `belongs_to :author, class_name: 'User'`
 
-- models/post.rb
-- belongs_to :author, class_name: 'User', foreign_key: 'user_id'
+- `models/post.rb`
+- `belongs_to :author, class_name: 'User', foreign_key: 'user_id'`
 
 - Now, inside your console you may do something like:
 - `$ post = Post.new `
 - `$ post.create_author`
 
-- Another common option that you can set is :dependent, usually for the has_many relatio
+- Another common option that you can set is `:dependent`, usually for the `has_many` relatio
 
-- The :dependent option accepts the following values:
-- :destroy – all associated objects will removed one by one (in a separate query).
-- :delete_all – all associated objects will be deleted in a single query.
-- :nullify – foreign keys for the associated objects will be set to NULL.
-- :restrict_with_exception – if there are any associated records, an exception will be raised.
-- :restrict_with_error – if there are any associated records, an error will be added to the owner (the record you are trying to delete).
+- The `:dependent` option accepts the following values:
+- `:destroy` – all associated objects will removed one by one (in a separate query).
+- `:delete_all` – all associated objects will be deleted in a single query.
+- `:nullify` – foreign keys for the associated objects will be set to NULL.
+- `:restrict_with_exception` – if there are any associated records, an exception will be raised.
+- `:restrict_with_error` – if there are any associated records, an error will be added to the owner (the record you are trying to delete).
 
-- models/user.rb
-- has_many :posts, dependent: :destroy
+- `models/user.rb`
+- `has_many :posts, dependent: :destroy`
 
-- belongs_to also supports the :dependent option – it may be set to either :destroy or :delete).
+- `belongs_to` also supports the `:dependent` option – it may be set to either `:destroy` or `:delete`x`.
+
+- you cannot create a record if its parent does not exist:
+- `Post.create({user_id: nil})`
+- This new feature may be disabled for the whole app by tweaking the following initializer file:
+- `Rails.application.config.active_record.belongs_to_required_by_default = false # default is true`
+- Also you may set the :optional setting for the individual relations:
+- `belongs_to :author, optional: true`
+
 ## Authors
 
 👤 **Moises Hernandez**

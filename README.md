@@ -23,6 +23,71 @@
 - Run `rails db:migrate` to create the database tables
 - Run `rails server` to open the local server
 
+## One-to-many Associations
+
+-Suppose, we have a user that may have a bunch of posts.
+
+- `$ rails g model User name:string`
+- As for the posts table, it has to contain a foreign key and the convention is to name this column after the related table
+
+- `$ rails g model Post user:references body:text`
+
+- user:references is a neat way to define a foreign key – it will automatically name the corresponding column user_id and add an index on it.
+
+- you can also say:
+- `$ rails g model Post user_id:integer:index body:text`
+
+- Apply your migrations:
+
+- `rails db:migrate`
+
+- As long as we used the references keyword when generating migration, the Post model will already have the following line:
+
+- belongs_to :user
+
+- Still, the User has to be modified manually:
+
+- models/user.rb
+
+- has_many :posts
+
+- Note the plural form (“posts“) for the relation’s name. For the belongs_to relation, you use the singular form (“user”).
+
+- Now the relation is established and you can use methods like:
+
+- user.posts – references user’s posts
+- user.posts << post – establishes a new relation between a user and a post
+- post.user – references an owner of the post
+- user.posts.build({ }) – instantiates a new post for the user, but doesn’t save it into the database yet. It does populate the user_id attribute on the post. This is similar to saying Post.new({user_id: user.id}).
+- user.posts.create({ }) – creates a new post and saves it into the database.
+- post.build_user – same as above, instantiates a new user without saving it.
+- post.create_user – same as above, instantiates and saves the user into the database.
+
+- Suppose, for example, that you want the belongs_to relation to be called author, not user:
+
+- models/post.rb
+- belongs_to :author, class_name: 'User'
+
+- models/post.rb
+- belongs_to :author, class_name: 'User', foreign_key: 'user_id'
+
+- Now, inside your console you may do something like:
+- `$ post = Post.new `
+- `$ post.create_author`
+
+- Another common option that you can set is :dependent, usually for the has_many relatio
+
+- The :dependent option accepts the following values:
+- :destroy – all associated objects will removed one by one (in a separate query).
+- :delete_all – all associated objects will be deleted in a single query.
+- :nullify – foreign keys for the associated objects will be set to NULL.
+- :restrict_with_exception – if there are any associated records, an exception will be raised.
+- :restrict_with_error – if there are any associated records, an error will be added to the owner (the record you are trying to delete).
+
+- models/user.rb
+- has_many :posts, dependent: :destroy
+
+- belongs_to also supports the :dependent option – it may be set to either :destroy or :delete).
 ## Authors
 
 👤 **Moises Hernandez**

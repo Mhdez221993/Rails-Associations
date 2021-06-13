@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Rails Associations
+# One-to-one Associations
 
 > Associations make it much easier to perform various operations on the records in your code. There are multiple types of associations available:
 
@@ -26,6 +26,25 @@
 - Run `rails db:migrate` to create the database tables
 - Run `rails server` to open the local server
 
+
+## One-to-one
+>With one-to-one relations you are basically saying that a record contains exactly one instance of another model. For example, let’s store user’s address in a separate table called addresses. This table must contain a foreign key which is by default named after the relation:
+
+- `$ rails g model Address street:string city:string country:string user_id:integer:index`
+- `$ rake db:migrate`
+
+- For the user simply say:
+- `models/user.rb`
+- `has_one :address`
+
+- Having this in place, you may call methods like:
+- `user.address` – fetches the related address
+- `user.build_address` – same as the method provided by belongs_to; instantiates a new address, but does not
+save it into the database.
+- `user.create_address` – instantiates a new address, and saves it into the database.
+
+- The `has_one` relation allows you to define `:class_name`, `:dependent`, `:foreign_key`, and other options, just like with has_many.
+- `
 ## Authors
 
 👤 **Moises Hernandez**
